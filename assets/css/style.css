@@ -1,0 +1,8 @@
+.score-time a {
+    text-decoration: none;
+    color: #e75480;
+}
+
+.timer {
+    float: right;
+}

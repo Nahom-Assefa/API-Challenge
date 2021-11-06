@@ -1,7 +1,7 @@
 var isPlaying = true;
 var highScore = 0;
 
-
+// stored values in objects array
 const questionsArray = [{
     question: "Which country does not border France",
     options: ['Belgium', 'Switzerland', 'Luxembourg', 'Netherlands'],
@@ -43,3 +43,22 @@ const questionsArray = [{
     correctAnswer: 'South Korea',
 }]
 
+
+
+
+
+
+
+
+/*const arr = function() {
+    questionsArray.forEach(function(item, index) {
+        console.log(item, index);
+    },
+)}
+
+arr();
+
+
+Set Timer
+
+setTimeout(function()*/
