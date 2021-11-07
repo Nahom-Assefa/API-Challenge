@@ -94,6 +94,27 @@ questionsArray.forEach(function (item, index) {
   for (i = 0; i < item.options.length; i++) {}
 });*/
 
+
+
+// store the scores
+function inputScore() {
+  localStorage.setItem("highscore", score);
+  localStorage.setItem("highscoreName", $("#name").value);
+  retrieveScore();
+}
+
+// retrieve scores
+function retrieveScore() {
+  var hsn = localStorage.getItem("highscoreName");
+  var hs = localStorage.getItem("highScore");
+  $("#mainBody").prepend(
+    `<h2>${hsn}'s highscore is:</h2>`,
+    `<h1>${hs}</h1>`,
+    '<button onclick="clearScore()">Clear score!</button>',
+    `<button onclick="resetGame()">Play Again!</button>`
+  );
+}
+
 //Initializing timer function
 function countdown() {
   var count = setInterval(function () {
