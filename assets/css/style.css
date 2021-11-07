@@ -1,8 +1,14 @@
-.score-time a {
+.score a {
     text-decoration: none;
     color: #e75480;
+
 }
 
-.timer {
+.time {
     float: right;
+    color: red;
+}
+
+#mainBody {
+    text-align: center;
 }

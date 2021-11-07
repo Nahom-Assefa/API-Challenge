@@ -54,7 +54,7 @@ const questionsArray = [
   },
 ];
 
-$("#start").on("click", function () {
+$("#btn-start").on("click", function () {
   // Hiding the initial page
   $("#initial-page").hide();
   // Hiding the final page
