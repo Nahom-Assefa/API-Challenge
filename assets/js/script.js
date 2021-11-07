@@ -1,11 +1,16 @@
 // Declarations
+var score = 0;
+var total = 8;
+var currentQuestion = -1;
+var timeLeft = 0;
+var timer;
+
 var highScore = 0;
 var quizIndex = 0;
 
-var timer = false;
 var minutes = 1;
-var seconds = 5;
-var question = 0
+var seconds = 10;
+var question = 0;
 
 var startButton = document.querySelector("start-btn");
 //var question = "Which country does not border France";
@@ -23,12 +28,14 @@ const questionsArray = [
     correctAnswer: "Tromelin",
   },
   {
-    question:"Which modern state is not within the boundaries of the Louisiana purchase",
+    question:
+      "Which modern state is not within the boundaries of the Louisiana purchase",
     options: ["Idaho", "North Dakota", "Oklahoma", "Nebraska"],
     correctAnswer: "Idaho",
   },
   {
-    question:"Which country did the famous Roman General and Statesman Pompey die",
+    question:
+      "Which country did the famous Roman General and Statesman Pompey die",
     options: ["Gaul", "Greece", "Egypt", "Persia"],
     correctAnswer: "Egypt",
   },
@@ -56,14 +63,14 @@ const questionsArray = [
 
 $("#btn-start").on("click", function () {
   // Hiding the initial page
-  $("#initial-page").hide();
+  $("h1").hide();
   // Hiding the final page
-  $("#final-page").hide();
+  $("h3").hide();
   // Call timer function
-  //countdown();
+  countdown();
   // Display first question
   questionsArray.forEach(function (item, index) {
-    var cash = item.question[question]; 
+    var cash = item.question[question];
     console.log(cash);
 
     //$("#question-title").html(item);
@@ -87,27 +94,27 @@ questionsArray.forEach(function (item, index) {
   for (i = 0; i < item.options.length; i++) {}
 });*/
 
-
-
-
-
-
 //Initializing timer function
-/*function countdown() {
+function countdown() {
   var count = setInterval(function () {
     if (minutes !== 0 && seconds !== 0) {
-      $(".timer").html(`${minutes}:${seconds}`)
-    } 
-    if (minutes !== 0 && seconds === 0) { 
-        minutes = minutes - 1;
-        seconds = seconds + 59;
-    }
-    
-    else {
+      $("#timeLeft").html(`${seconds}`);
+    } else {
       clearInterval(count);
-      clearAll();
-      window.alert("Time is up!");
+      gameEnd();
     }
     seconds--;
   }, 1000);
-}*/
+}
+
+//end game function
+function gameEnd() {
+  clearInterval(timer);
+  window.alert("Time is up!");
+  $("#mainBody").prepend(
+    `<h2>Game Over</h2>`,
+    `<h3> You got ${score}/${total} questions correct! </h3>`,
+    `<input type="text" id="name" placeholder="Initials">`,
+    `<button onclick="setScore()">Set score!</button>`
+  );
+}
