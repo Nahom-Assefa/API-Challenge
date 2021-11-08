@@ -6,54 +6,51 @@ var timeLeft = 0;
 var count;
 
 var highScore = 0;
-var quizIndex = 0;
+//var quizIndex = 0;
 
 var minutes = 1;
 var seconds = 100;
-var question = 0;
 
-var startButton = document.querySelector("start-btn");
-//var question = "Which country does not border France";
 
 // stored values in objects array
 const questionsArray = [
   {
-    question: "Which country does not border France",
+    head: "Which country does not border France",
     options: ["Belgium", "Switzerland", "Luxembourg", "Netherlands"],
     correctAnswer: "Netherlands",
   },
   {
-    question: "Which is not a province of Canada",
+    head: "Which is not a province of Canada",
     options: ["Yukon", "Tromelin", "Nova Scotia", "New Brunswick"],
     correctAnswer: "Tromelin",
   },
   {
-    question: "Which modern state is not within the boundaries of the Louisiana purchase",
+    head: "Which modern state is not within the boundaries of the Louisiana purchase",
     options: ["Idaho", "North Dakota", "Oklahoma", "Nebraska"],
     correctAnswer: "Idaho",
   },
   {
-    question: "Which country did the famous Roman General and Statesman Pompey die",
+    head: "Which country did the famous Roman General and Statesman Pompey die",
     options: ["Gaul", "Greece", "Egypt", "Persia"],
     correctAnswer: "Egypt",
   },
   {
-    question: "Where is Julian Assange currently residing",
+    head: "Where is Julian Assange currently residing",
     options: ["Russia", "United States", "Ecuador", "England"],
     correctAnswer: "England",
   },
   {
-    question: "Which country did coffee originate in",
+    head: "Which country did coffee originate in",
     options: ["Brazil", "Vietnam", "Ethiopia", "Philippines"],
     correctAnswer: "Ethiopia",
   },
   {
-    question: "Which country was Elon Musk born in",
+    head: "Which country was Elon Musk born in",
     options: ["England", "Kenya", "South Africa", "Australia"],
     correctAnswer: "South Africa",
   },
   {
-    question: "Which country has Seoul as the capital",
+    head: "Which country has Seoul as the capital",
     options: ["South Korea", "Indonesia", "Myanmar", "Pakistan"],
     correctAnswer: "South Korea",
   },
@@ -160,32 +157,32 @@ console.log("hello");
 function following() {
   $("#mainBody").empty();
   currentQuestion++;
+  console.log(currentQuestion);
 
   if (currentQuestion > questionsArray.length) {
     gameEnd();
   }
 
-  let mainBody = `<h2> ${questionsArray[currentQuestion].question} </h2>`
-
+  let mainBody = "<h2>" + questionsArray[currentQuestion].head + "</h2>"
   for (let i = 0; i < questionsArray[currentQuestion].options.length; i++) {
-    var btnEntry = '<button onclick="[ANS]">[CHOICE]</button>';
+    var btnEntry = '<button onclick="[answer]">[option]</button>';
     btnEntry = btnEntry.replace(
-      "[CHOICE]",
+      "[option]",
       questionsArray[currentQuestion].options[i]
     );
     if (
       questionsArray[currentQuestion].options[i] ==
       questionsArray[currentQuestion].correctAnswer
     ) {
-      btnEntry = btnEntry.replace("[ANS]", "success()");
+      btnEntry = btnEntry.replace("[answer]", "success()");
     } else {
-      btnEntry = btnEntry.replace("[ANS]", "error()");
+      btnEntry = btnEntry.replace("[answer]", "error()");
     }
     mainBody += btnEntry;
   }
 
   $("#mainBody").prepend(mainBody);
-
+  
 }
 
 /*questionsArray.forEach(function (item, index) {
