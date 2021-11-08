@@ -63,30 +63,13 @@ const questionsArray = [
 
 $("#btn-start").on("click", function () {
   // Hiding the initial page
-  $("h1").hide();
+  $("h1").empty();
   // Hiding the final page
-  $("h3").hide();
+  $("h3").empty();
   // Call timer function
   countdown();
-  // Display first question
-  questionsArray.forEach(function (item, index) {
-    var cash = item.question[question];
-    console.log(cash);
-
-    //$("#question-title").html(item);
-  });
-
-  // create elements that make up a task item
-  var optionLi = $("<li>").addClass("list-group-item");
-
-  // create btn
-  var btn = $(".btn").addClass("option-btn").text("hello");
-
-  // append btn element to parent li
-  optionLi.append(btn);
-
-  // append to ul list on the page
-  $("#options").append(optionLi);
+  // call loop
+  following()
 });
 
 /* loop over questionsArray
@@ -136,6 +119,18 @@ function reSet() {
   );
 }
 
+//deduct 15seconds 
+function error() {
+    timeLeft -= 15; 
+    following();
+    }
+    
+//increases score for correct answer 
+    function success() {
+    score += 1;
+    following();
+    }
+
 //Initializing timer function
 function countdown() {
   count = setInterval(function () {
@@ -160,3 +155,48 @@ function gameEnd() {
     `<button onclick="setScore()">Set score!</button>`
   );
 }
+
+
+function following() {
+    currentQuestion++;
+
+if (currentQuestion > questionsArray.length) {
+    gameEnd();
+}
+
+let mainBody = "<h2>" + questionsArray[currentQuestion].question + "</h2>"
+
+for (let i = 0; i < questionsArray[currentQuestion].options.length; i++) {
+    var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>"; 
+    buttonCode = buttonCode.replace("[CHOICE]", questionsArray[currentQuestion].options[i]);
+    if (questionsArray[currentQuestion].options[i] == questionsArray[currentQuestion].correctAnswer) {
+        buttonCode = buttonCode.replace("[ANS]", "correct()");
+    } else {
+        buttonCode = buttonCode.replace("[ANS]", "incorrect()");
+    }
+    mainBody += buttonCode
+}
+}
+
+
+
+
+
+/*questionsArray.forEach(function (item, index) {
+    var cash = item.question[question];
+    console.log(cash);
+
+$("#question-title").html(item);
+  });
+  
+   create elements that make up a task item
+  var optionLi = $("<li>").addClass("list-group-item");
+
+   create btn
+  var btn = $(".btn").addClass("option-btn").text("hello");
+
+   append btn element to parent li
+  optionLi.append(btn);
+
+   append to ul list on the page
+  $("#options").append(optionLi);*/
