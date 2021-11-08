@@ -9,7 +9,7 @@ var highScore = 0;
 var quizIndex = 0;
 
 var minutes = 1;
-var seconds = 10;
+var seconds = 100;
 var question = 0;
 
 var startButton = document.querySelector("start-btn");
@@ -28,14 +28,12 @@ const questionsArray = [
     correctAnswer: "Tromelin",
   },
   {
-    question:
-      "Which modern state is not within the boundaries of the Louisiana purchase",
+    question: "Which modern state is not within the boundaries of the Louisiana purchase",
     options: ["Idaho", "North Dakota", "Oklahoma", "Nebraska"],
     correctAnswer: "Idaho",
   },
   {
-    question:
-      "Which country did the famous Roman General and Statesman Pompey die",
+    question: "Which country did the famous Roman General and Statesman Pompey die",
     options: ["Gaul", "Greece", "Egypt", "Persia"],
     correctAnswer: "Egypt",
   },
@@ -120,14 +118,16 @@ function reSet() {
 
 //deduct 15seconds
 function error() {
-  timeLeft -= 15;
-  following();
+  timeLeft -= 10;
+  $("#mainBody").append("<h3>Sorry wrong answer </h3>");
+  setTimeout(following, 1500);
 }
 
 //increases score for correct answer
 function success() {
   score += 1;
-  following();
+  $("#mainBody").append("<h3> Correct answer! </h3>");
+  setTimeout(following, 1500);
 }
 
 //Initializing timer function
@@ -145,6 +145,7 @@ function countdown() {
 
 //end game function
 function gameEnd() {
+console.log("hello");
   clearInterval(count);
   window.alert("Time is up!");
   $("#mainBody").empty();
@@ -157,13 +158,14 @@ function gameEnd() {
 }
 
 function following() {
+  $("#mainBody").empty();
   currentQuestion++;
 
   if (currentQuestion > questionsArray.length) {
     gameEnd();
   }
 
-  let mainBody = "<h2>" + questionsArray[currentQuestion].question + "</h2>";
+  let mainBody = `<h2> ${questionsArray[currentQuestion].question} </h2>`
 
   for (let i = 0; i < questionsArray[currentQuestion].options.length; i++) {
     var btnEntry = '<button onclick="[ANS]">[CHOICE]</button>';
@@ -175,14 +177,15 @@ function following() {
       questionsArray[currentQuestion].options[i] ==
       questionsArray[currentQuestion].correctAnswer
     ) {
-      btnEntry = btnEntry.replace("[ANS]", "correct()");
+      btnEntry = btnEntry.replace("[ANS]", "success()");
     } else {
-      btnEntry = btnEntry.replace("[ANS]", "incorrect()");
+      btnEntry = btnEntry.replace("[ANS]", "error()");
     }
     mainBody += btnEntry;
   }
 
   $("#mainBody").prepend(mainBody);
+
 }
 
 /*questionsArray.forEach(function (item, index) {
