@@ -3,7 +3,7 @@ var score = 0;
 var total = 8;
 var currentQuestion = -1;
 var timeLeft = 0;
-var timer;
+var count;
 
 var highScore = 0;
 var quizIndex = 0;
@@ -94,8 +94,6 @@ questionsArray.forEach(function (item, index) {
   for (i = 0; i < item.options.length; i++) {}
 });*/
 
-
-
 // store the scores
 function inputScore() {
   localStorage.setItem("highscore", score);
@@ -115,9 +113,32 @@ function retrieveScore() {
   );
 }
 
+//clears local storage
+function clear() {
+  localStorage.setItem("highscore", "");
+  localStorage.setItem("highscoreName", "");
+  reSet();
+}
+
+//reset the game
+function reSet() {
+  clearInterval(count);
+  score = 0;
+  currentQuestion = -1;
+  timeLeft = 0;
+  count = null;
+
+  $("#timeLeft").html(timeLeft);
+
+  $("#mainBody").prepend(
+    "<h1> Geography Code Quiz </h1>",
+    '<h3><button onclick="start()">Start!</button></h3>'
+  );
+}
+
 //Initializing timer function
 function countdown() {
-  var count = setInterval(function () {
+  count = setInterval(function () {
     if (minutes !== 0 && seconds !== 0) {
       $("#timeLeft").html(`${seconds}`);
     } else {
