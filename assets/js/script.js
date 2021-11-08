@@ -61,7 +61,7 @@ const questionsArray = [
   },
 ];
 
-$("#btn-start").on("click", function () {
+function start () {
   // Hiding the initial page
   $("h1").empty();
   // Hiding the final page
@@ -69,18 +69,13 @@ $("#btn-start").on("click", function () {
   // Call timer function
   countdown();
   // call loop
-  following()
-});
-
-/* loop over questionsArray
-questionsArray.forEach(function (item, index) {
-  for (i = 0; i < item.options.length; i++) {}
-});*/
+  following();
+};
 
 // store the scores
 function inputScore() {
   localStorage.setItem("highscore", score);
-  localStorage.setItem("highscoreName", $("#name").value);
+  localStorage.setItem("highscoreName", document.getElementById('name').value);
   retrieveScore();
 }
 
@@ -88,11 +83,12 @@ function inputScore() {
 function retrieveScore() {
   var hsn = localStorage.getItem("highscoreName");
   var hs = localStorage.getItem("highScore");
+  $("#mainBody").empty();
   $("#mainBody").prepend(
-    `<h2>${hsn}'s highscore is:</h2>`,
-    `<h1>${hs}</h1>`,
-    '<button onclick="clearScore()">Clear score!</button>',
-    `<button onclick="resetGame()">Play Again!</button>`
+    `<h2> ${hsn}'s highscore is:</h2>`,
+    `<h1> ${hs} </h1>`,
+    '<button onclick="clear()">Clear score!</button>',
+    `<button onclick="reSet()">Play Again!</button>`
   );
 }
 
@@ -108,35 +104,37 @@ function reSet() {
   clearInterval(count);
   score = 0;
   currentQuestion = -1;
-  timeLeft = 0;
+  seconds = 10;
   count = null;
 
-  $("#timeLeft").html(timeLeft);
+  $("#timeLeft").html(seconds);
+
+  $("#mainBody").empty();
 
   $("#mainBody").prepend(
     "<h1> Geography Code Quiz </h1>",
-    '<h3><button onclick="start()">Start!</button></h3>'
+    '<h3>Click to play!</h3>',
+    `<button id= "btn-start" class= "bg-warning" onclick="start()">Start!</button>`
   );
 }
 
-//deduct 15seconds 
+//deduct 15seconds
 function error() {
-    timeLeft -= 15; 
-    following();
-    }
-    
-//increases score for correct answer 
-    function success() {
-    score += 1;
-    following();
-    }
+  timeLeft -= 15;
+  following();
+}
+
+//increases score for correct answer
+function success() {
+  score += 1;
+  following();
+}
 
 //Initializing timer function
 function countdown() {
   count = setInterval(function () {
-    if (minutes !== 0 && seconds !== 0) {
-      $("#timeLeft").html(`${seconds}`);
-    } else {
+    $("#timeLeft").html(`${seconds}`);
+    if (seconds <= 0) {
       clearInterval(count);
       gameEnd();
     }
@@ -144,43 +142,48 @@ function countdown() {
   }, 1000);
 }
 
+
 //end game function
 function gameEnd() {
-  clearInterval(timer);
+  clearInterval(count);
   window.alert("Time is up!");
+  $("#mainBody").empty();
   $("#mainBody").prepend(
     `<h2>Game Over</h2>`,
     `<h3> You got ${score}/${total} questions correct! </h3>`,
     `<input type="text" id="name" placeholder="Initials">`,
-    `<button onclick="setScore()">Set score!</button>`
+    `<button onclick="inputScore()">Set score!</button>`
   );
 }
 
-
 function following() {
-    currentQuestion++;
+  currentQuestion++;
 
-if (currentQuestion > questionsArray.length) {
+  if (currentQuestion > questionsArray.length) {
     gameEnd();
-}
+  }
 
-let mainBody = "<h2>" + questionsArray[currentQuestion].question + "</h2>"
+  let mainBody = "<h2>" + questionsArray[currentQuestion].question + "</h2>";
 
-for (let i = 0; i < questionsArray[currentQuestion].options.length; i++) {
-    var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>"; 
-    buttonCode = buttonCode.replace("[CHOICE]", questionsArray[currentQuestion].options[i]);
-    if (questionsArray[currentQuestion].options[i] == questionsArray[currentQuestion].correctAnswer) {
-        buttonCode = buttonCode.replace("[ANS]", "correct()");
+  for (let i = 0; i < questionsArray[currentQuestion].options.length; i++) {
+    var btnEntry = '<button onclick="[ANS]">[CHOICE]</button>';
+    btnEntry = btnEntry.replace(
+      "[CHOICE]",
+      questionsArray[currentQuestion].options[i]
+    );
+    if (
+      questionsArray[currentQuestion].options[i] ==
+      questionsArray[currentQuestion].correctAnswer
+    ) {
+      btnEntry = btnEntry.replace("[ANS]", "correct()");
     } else {
-        buttonCode = buttonCode.replace("[ANS]", "incorrect()");
+      btnEntry = btnEntry.replace("[ANS]", "incorrect()");
     }
-    mainBody += buttonCode
+    mainBody += btnEntry;
+  }
+
+  $("#mainBody").prepend(mainBody);
 }
-}
-
-
-
-
 
 /*questionsArray.forEach(function (item, index) {
     var cash = item.question[question];
