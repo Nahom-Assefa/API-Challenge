@@ -2,13 +2,9 @@
 var score = 0;
 var total = 8;
 var currentQuestion = -1;
-var timeLeft = 0;
 var count;
-
-var highScore = 0;
-//var quizIndex = 0;
-
 var seconds = 90;
+var highScore = 0;
 
 // stored values in objects array
 const questionsArray = [
@@ -87,21 +83,23 @@ function retrieveScore() {
   $("#mainBody").prepend(
     `<h2> ${hsn}'s highscore is:</h2>`,
     `<h1> ${hs} </h1>`,
-    
-    `<button onclick="reSet()">Play Again!</button>`,
+    `<button onclick="clear()">Clear score!</button>`,
+    `<button onclick="reSet()">Play Again!</button>`
   );
-  $("#mainBody").prepend(`<button onclick="clear()">Clear score!</button>`);
 }
 
 function clear() {
-    console.log("hello");
-    //localStorage.clear();
-   // $("#mainBody").empty();
+  console.log("hello");
+  localStorage.clear();
+  $("#mainBody").prepend(
+    "<h1> Geography Code Quiz </h1>",
+    "<h3>Click to play!</h3>",
+    `<button id= "btn-start" class= "bg-warning" onclick="start()">Start!</button>`
+  );
 }
 
 //reset the game
 function reSet() {
-    console.log("hello");
   clearInterval(count);
   score = 0;
   currentQuestion = -1;
@@ -122,7 +120,7 @@ function reSet() {
 
 //deduct 15seconds
 function error() {
-  timeLeft -= 10;
+  seconds -= 10;
   $("#mainBody").append("<h3>Sorry wrong answer </h3>");
   setTimeout(following, 1500);
 }
@@ -140,6 +138,7 @@ function countdown() {
     $("#timeLeft").html(`${seconds}`);
     if (seconds <= 0) {
       clearInterval(count);
+      alert("time is up!");
       gameEnd();
     }
     seconds--;
@@ -149,7 +148,6 @@ function countdown() {
 //end game function
 function gameEnd() {
   clearInterval(count);
-  window.alert("Time is up!");
   $("#mainBody").empty();
   $("#mainBody").prepend(
     `<h2>Game Over</h2>`,
@@ -193,22 +191,3 @@ function following() {
 
   $("#mainBody").prepend(mainBody);
 }
-
-/*questionsArray.forEach(function (item, index) {
-    var cash = item.question[question];
-    console.log(cash);
-
-$("#question-title").html(item);
-  });
-  
-   create elements that make up a task item
-  var optionLi = $("<li>").addClass("list-group-item");
-
-   create btn
-  var btn = $(".btn").addClass("option-btn").text("hello");
-
-   append btn element to parent li
-  optionLi.append(btn);
-
-   append to ul list on the page
-  $("#options").append(optionLi);*/
