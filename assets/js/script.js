@@ -83,14 +83,14 @@ function retrieveScore() {
   $("#mainBody").prepend(
     `<h2> ${hsn}'s highscore is:</h2>`,
     `<h1> ${hs} </h1>`,
-    `<button onclick="clear()">Clear score!</button>`,
+    `<button onclick="clearIt()">Clear score!</button>`,
     `<button onclick="reSet()">Play Again!</button>`
   );
 }
 
-function clear() {
-  console.log("hello");
+function clearIt() {
   localStorage.clear();
+  $("#mainBody").empty();
   $("#mainBody").prepend(
     "<h1> Geography Code Quiz </h1>",
     "<h3>Click to play!</h3>",
