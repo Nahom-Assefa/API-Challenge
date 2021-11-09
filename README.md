@@ -3,16 +3,17 @@
 **Version 1.0.0**
 
 ## The Purpose
-The purpose of this project was to create a random password generator utilizing javascript functionality to manipulate the DOM based on criteria the viewer of the webpage requested through a series of browser displays.
+The purpose of this project was to create a quiz game where the user goes through a series of interactive trivia like questions in an allotted amount of time. Our job was to also store the high score and present the highscore.
 
 ## Significant Changes
-In terms of filtering out choices customer did not want I went with if/else statements covering all possible permutations of customer selection. I realize there is probably better ways to do it, and is not optimal given my limited purview only so many weeks into the course it was the best I could come up with. From each if/else statement confirm display value I would pull a character and randomize it in a loop that would push into an array until eventually I used the join method to return a string from the array.
+This project required us to utilize many different aspects of what we learned so far in javascript. I became accustomed with Jquery typescript so you will see many of my DOM manipulation choices were in Jquery. The architecture I used was an array of objects that would get looped over in a for loop to compare the index at the array of options to the answer. This was the two central pieces needed to navigate the rest of the functions needed to complete the challenge.
 
 ### Challenges
-There were significant challenges on this project that were as much theoretical as practical. What I mean is the javascript code given to us was minimal and in terms of architecture there were a myriad of ways one could go about it. Further, the project utilized or necessitated javascript concepts I was not entirely familiar with. For example, some of the students in office hours used the for each method, others splicing, and myself String.fromCharCode which I found a helpgul video guide my thinking on that aspect. I think it was a project that stretched me and made me realize I presume I will have to do more out of the box thinking to make it through this course.
+There were significant challenges on this project that were as much theoretical as practical. What I mean is Javascript code was not given to us, and in terms of architecture there were a myriad of ways one could go about it. Further, I had issues with my for loop in regards to appending to the DOM so new questions would be presented after a answer selection was provided. There was a series of debugging that was required with the time function, and to the local storage as well. Console.log was crucial here in navigating what listeners were not working etc.
+
 
 #### Screenshot
-
+![](assets/images/API-screenshot.png)
 
 ##### Link
 https://nahom-assefa.github.io/API-Challenge/

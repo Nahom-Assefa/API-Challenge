@@ -50,6 +50,7 @@ const questionsArray = [
   },
 ];
 
+//Start game
 function start() {
   // Hiding the initial page
   $("h1").empty();
@@ -88,9 +89,18 @@ function retrieveScore() {
   );
 }
 
+// clearing local storage
 function clearIt() {
   localStorage.clear();
   $("#mainBody").empty();
+  clearInterval(count);
+  score = 0;
+  currentQuestion = -1;
+  seconds = 90;
+  count = null;
+  timeLeft = 100;
+
+  $("#timeLeft").html(seconds);
   $("#mainBody").prepend(
     "<h1> Geography Code Quiz </h1>",
     "<h3>Click to play!</h3>",
@@ -118,7 +128,7 @@ function reSet() {
   );
 }
 
-//deduct 15seconds
+//deduct 10 seconds
 function error() {
   seconds -= 10;
   $("#mainBody").append("<h3>Sorry wrong answer </h3>");
@@ -161,6 +171,7 @@ function gameEnd() {
   }
 }
 
+// looping function comparing option selected vs answer
 function following() {
   $("#mainBody").empty();
   currentQuestion++;
