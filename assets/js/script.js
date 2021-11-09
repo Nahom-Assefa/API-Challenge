@@ -8,9 +8,7 @@ var count;
 var highScore = 0;
 //var quizIndex = 0;
 
-var minutes = 1;
-var seconds = 100;
-
+var seconds = 90;
 
 // stored values in objects array
 const questionsArray = [
@@ -56,7 +54,7 @@ const questionsArray = [
   },
 ];
 
-function start () {
+function start() {
   // Hiding the initial page
   $("h1").empty();
   // Hiding the final page
@@ -65,42 +63,51 @@ function start () {
   countdown();
   // call loop
   following();
-};
+}
 
 // store the scores
 function inputScore() {
-  localStorage.setItem("highscore", score);
-  localStorage.setItem("highscoreName", document.getElementById('name').value);
+  if (score > localStorage.getItem("highscore")) {
+    localStorage.setItem("highscore", score);
+    localStorage.setItem(
+      "highscoreName",
+      document.getElementById("name").value
+    );
+  }
+
   retrieveScore();
 }
 
 // retrieve scores
 function retrieveScore() {
   var hsn = localStorage.getItem("highscoreName");
-  var hs = localStorage.getItem("highScore");
+  var hs = localStorage.getItem("highscore");
+  console.log(hs);
   $("#mainBody").empty();
   $("#mainBody").prepend(
     `<h2> ${hsn}'s highscore is:</h2>`,
     `<h1> ${hs} </h1>`,
-    '<button onclick="clear()">Clear score!</button>',
-    `<button onclick="reSet()">Play Again!</button>`
+    
+    `<button onclick="reSet()">Play Again!</button>`,
   );
+  $("#mainBody").prepend(`<button onclick="clear()">Clear score!</button>`);
 }
 
-//clears local storage
 function clear() {
-  localStorage.setItem("highscore", "");
-  localStorage.setItem("highscoreName", "");
-  reSet();
+    console.log("hello");
+    //localStorage.clear();
+   // $("#mainBody").empty();
 }
 
 //reset the game
 function reSet() {
+    console.log("hello");
   clearInterval(count);
   score = 0;
   currentQuestion = -1;
-  seconds = 10;
+  seconds = 90;
   count = null;
+  timeLeft = 100;
 
   $("#timeLeft").html(seconds);
 
@@ -108,7 +115,7 @@ function reSet() {
 
   $("#mainBody").prepend(
     "<h1> Geography Code Quiz </h1>",
-    '<h3>Click to play!</h3>',
+    "<h3>Click to play!</h3>",
     `<button id= "btn-start" class= "bg-warning" onclick="start()">Start!</button>`
   );
 }
@@ -139,10 +146,8 @@ function countdown() {
   }, 1000);
 }
 
-
 //end game function
 function gameEnd() {
-console.log("hello");
   clearInterval(count);
   window.alert("Time is up!");
   $("#mainBody").empty();
@@ -152,6 +157,10 @@ console.log("hello");
     `<input type="text" id="name" placeholder="Initials">`,
     `<button onclick="inputScore()">Set score!</button>`
   );
+
+  if (score < localStorage.getItem("highscore")) {
+    $("#mainBody").append("Sorry you did not get the highscore");
+  }
 }
 
 function following() {
@@ -159,11 +168,12 @@ function following() {
   currentQuestion++;
   console.log(currentQuestion);
 
-  if (currentQuestion > questionsArray.length) {
+  if (currentQuestion >= questionsArray.length) {
     gameEnd();
+    return;
   }
 
-  let mainBody = "<h2>" + questionsArray[currentQuestion].head + "</h2>"
+  let mainBody = "<h2>" + questionsArray[currentQuestion].head + "</h2>";
   for (let i = 0; i < questionsArray[currentQuestion].options.length; i++) {
     var btnEntry = '<button onclick="[answer]">[option]</button>';
     btnEntry = btnEntry.replace(
@@ -182,7 +192,6 @@ function following() {
   }
 
   $("#mainBody").prepend(mainBody);
-  
 }
 
 /*questionsArray.forEach(function (item, index) {
